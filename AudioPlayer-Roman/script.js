@@ -22,6 +22,7 @@ window.onload =function(){
     playSong()
 }
 let currentSong = 0
+
 function playSong(){
     song.src = data.song[currentSong]
     let songTitle=document.getElementById("songTitle")
@@ -44,3 +45,61 @@ function playOrPause(){
         play.src="images/play-button-arrowhead.png"
     }
 }
+
+
+
+song.addEventListener("timeupdate",function(){
+    let fill =document.getElementsByClassName("fill")
+    let position= song.currentTime / song.duration
+
+    fill[0].style.marginLeft =position * 100 + "%"
+
+    converTime(song.currentTime)
+
+    if(song.ended){
+        next()
+    }
+})
+
+
+function converTime (seconds){
+     currentTime = document.getElementsByClassName("currentTime")
+    let min=Math.floor(seconds / 60)
+    let sec =Math.floor(seconds % 60)
+    min = (min<10) ? "0" + min:min;
+    sec = (sec<10) ? "0" + sec:sec;
+
+    currentTime[0].textContent = min + ":" + sec
+    totalTime(Math.round(song.duration))
+}
+
+function totalTime(seconds){
+    let min=Math.floor(seconds / 60)
+    let sec =Math.floor(seconds % 60)
+    min = (min<10) ? "0" + min:min;
+    sec = (sec<10) ? "0" + sec:sec;
+
+    currentTime[0].textContent += "/" + min + ":" + sec
+}
+
+
+function next (){
+    currentSong++
+
+    if(currentSong >= data.song.length){
+        currentSong=0
+    }
+    playSong()
+    play.src="images/pause.png"
+} 
+
+
+function prev (){
+    currentSong--
+
+    if(currentSong < 0){
+        currentSong = data.song.length - 1
+    }
+    playSong()
+    play.src="images/pause.png"
+}                 
