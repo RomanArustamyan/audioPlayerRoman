@@ -90,6 +90,7 @@ function next (){
         currentSong=0
     }
     playSong()
+    song.play()
     play.src="images/pause.png"
 } 
 
@@ -101,5 +102,26 @@ function prev (){
         currentSong = data.song.length - 1
     }
     playSong()
+    song.play()
     play.src="images/pause.png"
-}                 
+} 
+console.log(song)
+function mute(){
+    let mute=document.getElementById("mute")
+    if(song.muted){
+        mute.src="images/volume.png"
+        song.muted=false
+    }
+    else{
+        mute.src="images/volume-mute.png"
+        song.muted=true
+    }
+}
+
+function decrease(){
+    song.volume-=0.3
+}
+
+function increase(){
+    song.volume+=0.3
+}
